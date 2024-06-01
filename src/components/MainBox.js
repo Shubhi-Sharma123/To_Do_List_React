@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputBox from "./InputBox";
-import "./mainbox.css";
 import TodoList from "./TodoList";
+import "./mainbox.css";
 
 const MainBox = () => {
     const [text, setText] = useState("");
@@ -10,39 +10,38 @@ const MainBox = () => {
 
     const transferData = (data) => {
         if (editId) {
-            const editItemData = list.map((data1) =>
-                data1.id === editId ? { ...data1, text: data } : data1
+            const updatedList = list.map((item) =>
+                item.id === editId ? { ...item, text: data } : item
             );
-            setList(editItemData);
-            setText("");
+            setList(updatedList);
             setEditId(null);
         } else if (text !== "") {
-            const objData = {
+            const newItem = {
                 text: data,
                 id: new Date().getTime().toString(),
                 status: false,
             };
-            setList([...list, objData]);
-            setText("");
+            setList([...list, newItem]);
         }
+        setText("");
     };
 
     const deleteItem = (id) => {
-        const deletedData = list.filter((data) => data.id !== id);
-        setList(deletedData);
+        const filteredList = list.filter((item) => item.id !== id);
+        setList(filteredList);
     };
 
     const editItem = (id) => {
-        const editData = list.find((data) => data.id === id);
-        setText(editData.text);
-        setEditId(editData.id);
+        const itemToEdit = list.find((item) => item.id === id);
+        setText(itemToEdit.text);
+        setEditId(itemToEdit.id);
     };
 
     const handleCheckBox = (id) => {
-        const checkId = list.map((token) =>
-            token.id === id ? { ...token, status: !token.status } : token
+        const updatedList = list.map((item) =>
+            item.id === id ? { ...item, status: !item.status } : item
         );
-        setList(checkId);
+        setList(updatedList);
     };
 
     return (

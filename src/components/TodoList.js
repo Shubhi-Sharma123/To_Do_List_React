@@ -1,17 +1,27 @@
-const TodoList = ({ id, text, status, deleteitem, edititem, handleCheckBox }) => {
+import PropTypes from "prop-types";
+
+const TodoList = ({ id, text, status, deleteItem, editItem, handleCheckBox }) => {
     return (
-        <>
-            <div className={`listItems ${status ? 'doneBackground' : ''}`}>
-                <div className="checkdata">
-                    <input type="checkbox" onChange={() => handleCheckBox(id)} />
-                    <p className={status ? "Done" : "NotDone"}>{text}</p>
-                </div>
-                <div className="buttons">
-                    <button id="editbtn" onClick={() => { edititem(id) }}>Edit</button>
-                    <button id="delbtn" onClick={() => { deleteitem(id) }}>Delete</button>
-                </div>
+        <div className={`listItems ${status ? 'doneBackground' : ''}`}>
+            <div className="checkdata">
+                <input type="checkbox" onChange={() => handleCheckBox(id)} checked={status} />
+                <p className={status ? "Done" : ""}>{text}</p>
             </div>
-        </>
+            <div className="buttons">
+                <button id="editbtn" onClick={() => { editItem(id) }}>Edit</button>
+                <button id="delbtn" onClick={() => { deleteItem(id) }}>Delete</button>
+            </div>
+        </div>
     );
-}
+};
+
+TodoList.propTypes = {
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    text: PropTypes.string.isRequired,
+    status: PropTypes.bool.isRequired,
+    deleteItem: PropTypes.func.isRequired,
+    editItem: PropTypes.func.isRequired,
+    handleCheckBox: PropTypes.func.isRequired,
+};
+
 export default TodoList;
